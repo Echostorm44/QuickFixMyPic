@@ -1,0 +1,86 @@
+﻿<ui:UiWindow
+        xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+        Style="{StaticResource UiWindow}" 
+        x:Class="QuickFixMyPic.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:QuickFixMyPic"
+        mc:Ignorable="d"
+        Background="{ui:ThemeResource ApplicationBackgroundBrush}"
+        ExtendsContentIntoTitleBar="True"
+        WindowBackdropType="Mica"
+        WindowCornerPreference="Round" Closing="UiWindow_Closing"
+        WindowStartupLocation="CenterScreen"
+        Height="460" Width="450" WindowStyle="None">
+    <ui:UiWindow.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    </ui:UiWindow.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <ui:TitleBar Title="Quick! Fix My Pics!" FontSize="16" Grid.Row="0" Icon="pack://application:,,,/appIcon.png"></ui:TitleBar>
+        <Menu Grid.Row="1" Margin="0,0,0,10">
+            <ui:MenuItem Header="File" >
+                <MenuItem Header="Browse For File(s)" IsCheckable="False" Click="btnBrowseFiles_Click"/>
+                <MenuItem Header="Select Folder" IsCheckable="False" Click="FolderBrowse_Click" />
+                <MenuItem Header="Exit" IsCheckable="False"/>
+            </ui:MenuItem>
+            <ui:MenuItem Header="Edit" >
+                <MenuItem Header="Clear Selected Files" IsCheckable="False"/>
+                <MenuItem Header="Toggle Dark Mode" IsCheckable="False"/>
+            </ui:MenuItem>
+            <ui:MenuItem Header="Help" >
+                <MenuItem Header="View Help Wiki" IsCheckable="False"/>
+                <MenuItem Header="Check For Updates" IsCheckable="False"/>
+                <MenuItem Header="About" IsCheckable="False"/>
+            </ui:MenuItem>
+        </Menu>
+        <Border Grid.Row="2" Padding="10">
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Convert To" FontSize="16" Margin="0,0,15,0" VerticalAlignment="Center"></Label>
+                <ComboBox FontSize="16" MinWidth="200" ItemsSource="{Binding ConvertToTypesAvailable}" SelectedItem="{Binding SelectedConvertToType}"></ComboBox>
+                <ui:Button Content="Browse" Margin="15,0,0,0" HorizontalAlignment="Right" Name="btnBrowseFiles" Click="btnBrowseFiles_Click"></ui:Button>
+            </StackPanel>
+        </Border>
+        <Border Grid.Row="3" Padding="10">
+            <Grid Height="40">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <ui:ToggleSwitch Content="Resize" Name="chkResize" IsChecked="False" Margin="0,0,10,0"></ui:ToggleSwitch>
+                <ui:TextBox Name="txtWidth" PlaceholderText="Width" Visibility="{Binding IsChecked, ElementName=chkResize, Converter={StaticResource BoolToVisibilityConverter}}" 
+                            Grid.Column="1" Margin="0,0,10,0" ClearButtonEnabled="False"></ui:TextBox>
+                <ui:TextBox Name="txtHeight" PlaceholderText="Height" Visibility="{Binding IsChecked, ElementName=chkResize, Converter={StaticResource BoolToVisibilityConverter}}" 
+                            Grid.Column="2" ClearButtonEnabled="False"></ui:TextBox>
+                
+            </Grid>
+        </Border>
+        <Border Grid.Row="4" Padding="10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <ui:ToggleSwitch Content="Delete Original(s)" Name="chkDeleteOrig"></ui:ToggleSwitch>
+                <ui:Button Content="Engage!" Margin="15,0,0,0" Grid.Column="1" HorizontalAlignment="Right" Click="EngageClicked" Name="btnEngage"></ui:Button>
+            </Grid>            
+        </Border>        
+        <Border Grid.Row="5" Padding="10">
+            <ProgressBar x:Name="pbMainProgress" Value="0" Minimum="0" Maximum="1"></ProgressBar>
+        </Border>
+        <Border Grid.Row="6" Padding="10">
+            <ListBox ItemsSource="{Binding FilesToConvert}" AllowDrop="True" Drop="ListBox_Drop" Name="lbTargetFiles"></ListBox>
+        </Border>
+    </Grid>
+</ui:UiWindow>
