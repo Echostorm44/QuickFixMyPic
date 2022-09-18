@@ -20,7 +20,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
+using Wpf.Ui.Mvvm.Contracts;
+using Wpf.Ui.Mvvm.Services;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace QuickFixMyPic;
@@ -258,21 +261,34 @@ public partial class MainWindow : UiWindow
         }
     }
 
-    private void ToggleTheme_Click(object sender, RoutedEventArgs e)
+    private async void About_Click(object sender, RoutedEventArgs e)
     {
-        Environment.Exit(0);
-    }
-
-    private void About_Click(object sender, RoutedEventArgs e)
-    {
+        var mess = new Wpf.Ui.Controls.MessageBox();
+        mess.ButtonRightName = "OK";
+        mess.Show("test", "testing");
     }
 
     private void Help_Click(object sender, RoutedEventArgs e)
     {
+        var myProcess = new System.Diagnostics.Process();
+        myProcess.StartInfo.UseShellExecute = true;
+        myProcess.StartInfo.FileName = "https://github.com/Echostorm44/DaocLauncher";
+        myProcess.Start();
+    }
+
+    private void ToggleTheme_Click(object sender, RoutedEventArgs e)
+    {
+        Wpf.Ui.Appearance.Theme.Apply(ThemeType.Light);
     }
 
     private void CheckForUpdates_Click(object sender, RoutedEventArgs e)
     {
+        // TODO use this in the processing as well as here while looking for update
+        Wpf.Ui.TaskBar.TaskBarProgress.SetValue(this, Wpf.Ui.TaskBar.TaskBarProgressState.Indeterminate, 80);
+        //Wpf.Ui.TaskBar.TaskBarProgress.SetValue(
+        //            parentWindow,
+        //            Wpf.Ui.TaskBar.TaskBarProgressState.Normal,
+        //            80);
     }
 
     private void ClearSelected_Click(object sender, RoutedEventArgs e)

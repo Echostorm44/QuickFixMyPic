@@ -32,16 +32,15 @@
             <ui:MenuItem Header="File" >
                 <MenuItem Header="Browse For File(s)" IsCheckable="False" Click="btnBrowseFiles_Click"/>
                 <MenuItem Header="Select Folder" IsCheckable="False" Click="FolderBrowse_Click" />
-                <MenuItem Header="Exit" IsCheckable="False"/>
+                <MenuItem Header="Exit" IsCheckable="False" Click="Exit_Click"/>
             </ui:MenuItem>
             <ui:MenuItem Header="Edit" >
-                <MenuItem Header="Clear Selected Files" IsCheckable="False"/>
-                <MenuItem Header="Toggle Dark Mode" IsCheckable="False"/>
+                <MenuItem Header="Clear Selected Files" IsCheckable="False" Click="ClearSelected_Click"/>
             </ui:MenuItem>
             <ui:MenuItem Header="Help" >
-                <MenuItem Header="View Help Wiki" IsCheckable="False"/>
-                <MenuItem Header="Check For Updates" IsCheckable="False"/>
-                <MenuItem Header="About" IsCheckable="False"/>
+                <MenuItem Header="View Help Wiki" IsCheckable="False" Click="Help_Click"/>
+                <MenuItem Header="Check For Updates" IsCheckable="False" Click="CheckForUpdates_Click"/>
+                <MenuItem Header="About" IsCheckable="False" Click="About_Click"/>
             </ui:MenuItem>
         </Menu>
         <Border Grid.Row="2" Padding="10">
