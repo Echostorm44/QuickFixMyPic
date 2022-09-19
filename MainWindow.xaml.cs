@@ -85,7 +85,6 @@ public partial class MainWindow : UiWindow
         });
     }
 
-
     private void EngageClicked(object sender, RoutedEventArgs e)
     {
         var finalType = SelectedConvertToType;
@@ -152,6 +151,7 @@ public partial class MainWindow : UiWindow
         prog.ProgressChanged += (a, b) =>
         {
             pbMainProgress.Value = b;
+            Wpf.Ui.TaskBar.TaskBarProgress.SetValue(this, Wpf.Ui.TaskBar.TaskBarProgressState.Normal, (int)(b * 100));
         };
         var counter = 0;
         Task.Factory.StartNew(() =>
@@ -171,7 +171,7 @@ public partial class MainWindow : UiWindow
                         fullWriteFilePath = GeneralHelpers.CheckPathForDupesAndIncIfNeeded(fullWriteFilePath);
                         if(doResize && fixHeight > 0 && fixWidth > 0)
                         {
-                            image.Scale(fixWidth, fixHeight);
+                            image.Resize(fixWidth, fixHeight);
                         }
                         image.Write(fullWriteFilePath);
                         if(deleteOriginals == true)
@@ -183,7 +183,7 @@ public partial class MainWindow : UiWindow
                             FilesToConvert.Remove(item);
                         });
                         counter++;
-                        pro.Report(((double)counter / (double)targetFiles.Count));
+                        pro.Report((double)counter / (double)targetFiles.Count);
                     }
                 }
             }
@@ -199,7 +199,8 @@ public partial class MainWindow : UiWindow
             chkDeleteOrig.IsEnabled = true;
             btnEngage.IsEnabled = true;
             lbTargetFiles.IsEnabled = true;
-            pbMainProgress.Value = 1;
+            pbMainProgress.Value = 0;
+            Wpf.Ui.TaskBar.TaskBarProgress.SetValue(this, Wpf.Ui.TaskBar.TaskBarProgressState.Normal, 0);
         }, TaskScheduler.FromCurrentSynchronizationContext());
     }
 
@@ -253,26 +254,29 @@ public partial class MainWindow : UiWindow
 
     private void FolderBrowse_Click(object sender, RoutedEventArgs e)
     {
-        var goo = new System.Windows.Forms.FolderBrowserDialog();
-        var userFolderDialog = goo.ShowDialog();
+        var selectedFolder = new System.Windows.Forms.FolderBrowserDialog();
+        var userFolderDialog = selectedFolder.ShowDialog();
         if(userFolderDialog == System.Windows.Forms.DialogResult.OK)
         {
-            //goo.SelectedPath;
+            var folderFiles = Directory.EnumerateFiles(selectedFolder.SelectedPath, "*.*", SearchOption.AllDirectories);
+            foreach(var file in folderFiles)
+            {
+                FilesToConvert.Add(file.Trim());
+            }
         }
     }
 
     private async void About_Click(object sender, RoutedEventArgs e)
     {
-        var mess = new Wpf.Ui.Controls.MessageBox();
-        mess.ButtonRightName = "OK";
-        mess.Show("test", "testing");
+        About about = new About();
+        about.ShowDialog();
     }
 
     private void Help_Click(object sender, RoutedEventArgs e)
     {
         var myProcess = new System.Diagnostics.Process();
         myProcess.StartInfo.UseShellExecute = true;
-        myProcess.StartInfo.FileName = "https://github.com/Echostorm44/DaocLauncher";
+        myProcess.StartInfo.FileName = "https://github.com/Echostorm44/QuickFixMyPic/wiki";
         myProcess.Start();
     }
 

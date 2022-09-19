@@ -1,0 +1,40 @@
+﻿<Window x:Class="QuickFixMyPic.About"
+        xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+        Style="{StaticResource UiWindow}" 
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:QuickFixMyPic"
+        mc:Ignorable="d"
+        Background="{ui:ThemeResource ApplicationBackgroundBrush}"
+        
+        WindowStartupLocation="CenterScreen"
+        MinHeight="260" Width="350" WindowStyle="None">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <ui:TitleBar Title="About" FontSize="16" Grid.Row="0" Icon="pack://application:,,,/appIcon.png"></ui:TitleBar>
+        <Border Grid.Row="1" Padding="10">
+            <TextBlock Text="This is free software, as in speech. Every now and then I need to convert or resize a bunch of pics and doing them one by one in Paint.net or something is a bit much.  MS has a powertoy that comes close but doesn't convert and is a bit busy, so I made this.  I hope you find it useful." TextWrapping="Wrap" FontSize="16"></TextBlock>
+        </Border>
+        <Border Grid.Row="2" Padding="10">
+            <ui:Hyperlink NavigateUri="https://github.com/Echostorm44" Icon="Link48" Content="Slapped Together By Adam Marciniec" />
+        </Border>
+        <Border Grid.Row="3" Padding="10">
+            <ui:Hyperlink NavigateUri="https://www.flaticon.com/free-icons/image" Icon="Link48" Content="Image icons created by rsetiawan - Flaticon" />
+        </Border>
+        <Border Grid.Row="4" Padding="10">
+            <ui:Hyperlink NavigateUri="https://github.com/lepoco/wpfui" Icon="Link48" Content="WPF UI Lib by Lepo" />
+        </Border>
+        <Border Grid.Row="5" Padding="10">
+            <ui:Hyperlink NavigateUri="https://github.com/dlemstra/Magick.NET" Icon="Link48" Content="Magic.Net" />
+        </Border>
+    </Grid>
+</Window>
