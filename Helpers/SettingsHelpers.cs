@@ -66,7 +66,4 @@ public static class SettingsHelpers
 
 public class GeneralSettings
 {
-    public string DefaultSaveFolder { get; set; }
-    public bool SaveToSameFolder { get; set; }
-    public string DefaultTheme { get; set; }
 }

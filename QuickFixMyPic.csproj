@@ -9,10 +9,29 @@
     <Platforms>AnyCPU;x64</Platforms>
     <ApplicationIcon>appIcon.ico</ApplicationIcon>
     <UseWindowsForms>True</UseWindowsForms>
+    <Title>QuickFixMyPic</Title>
+    <Description>An intuative image file converter and resizer</Description>
+    <PackageProjectUrl>https://github.com/Echostorm44/QuickFixMyPic</PackageProjectUrl>
+    <PackageIcon>appIcon.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/Echostorm44/QuickFixMyPic</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>image;resizer;converter;</PackageTags>
+    <AssemblyVersion>1.0.0</AssemblyVersion>
+    <FileVersion>1.0.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="appIcon.png" />
+    <None Remove="version.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="appIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="version.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -21,9 +40,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="appIcon.png">
+    <Content Include="appIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -35,10 +54,22 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="appIcon.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
     <None Update="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Update="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="echo $(AssemblyVersion) &gt; $(TargetDir)version.txt" />
+  </Target>
 
 </Project>

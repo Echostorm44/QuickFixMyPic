@@ -8,6 +8,8 @@ using System.DirectoryServices.ActiveDirectory;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -280,19 +282,53 @@ public partial class MainWindow : UiWindow
         myProcess.Start();
     }
 
-    private void ToggleTheme_Click(object sender, RoutedEventArgs e)
+    private async void CheckForUpdates_Click(object sender, RoutedEventArgs e)
     {
-        Wpf.Ui.Appearance.Theme.Apply(ThemeType.Light);
+        string resultText = "Your version is up to date";
+        bool hasNewVersion = false;
+        Wpf.Ui.TaskBar.TaskBarProgress.SetValue(this, Wpf.Ui.TaskBar.TaskBarProgressState.Indeterminate, 80);
+        var assembly = Assembly.GetExecutingAssembly();
+        var version = assembly.GetName().Version.ToString();
+        using(HttpClient client = new HttpClient())
+        {
+            var result = await client.GetAsync("https://raw.githubusercontent.com/Echostorm44/QuickFixMyPic/main/version.txt");
+            if(result.IsSuccessStatusCode)
+            {
+                var availableVersion = await result.Content.ReadAsStringAsync();
+                if(availableVersion != version)
+                {
+                    resultText = "A newer version is available.";
+                    hasNewVersion = true;
+                }
+            }
+        }
+        Wpf.Ui.TaskBar.TaskBarProgress.SetValue(this, Wpf.Ui.TaskBar.TaskBarProgressState.None, 0);
+        var mb = new Wpf.Ui.Controls.MessageBox();
+        mb.ButtonLeftAppearance = Wpf.Ui.Common.ControlAppearance.Secondary;
+        mb.ButtonLeftName = "Close";
+        mb.ButtonRightName = "OK";
+        mb.ButtonLeftClick += CloseUpdateMessageBoxClick;
+        mb.ButtonRightClick += CloseUpdateMessageBoxClick;
+        if(hasNewVersion)
+        {
+            mb.ButtonRightClick += UpdateMessageBoxRightButtonClick;
+            mb.ButtonRightName = "Let's go get it!";
+        }
+        mb.Show("Update Check", resultText);
     }
 
-    private void CheckForUpdates_Click(object sender, RoutedEventArgs e)
+    private void UpdateMessageBoxRightButtonClick(object sender, RoutedEventArgs e)
     {
-        // TODO use this in the processing as well as here while looking for update
-        Wpf.Ui.TaskBar.TaskBarProgress.SetValue(this, Wpf.Ui.TaskBar.TaskBarProgressState.Indeterminate, 80);
-        //Wpf.Ui.TaskBar.TaskBarProgress.SetValue(
-        //            parentWindow,
-        //            Wpf.Ui.TaskBar.TaskBarProgressState.Normal,
-        //            80);
+        var myProcess = new System.Diagnostics.Process();
+        myProcess.StartInfo.UseShellExecute = true;
+        myProcess.StartInfo.FileName = "https://github.com/Echostorm44/QuickFixMyPic/releases";
+        myProcess.Start();
+        (sender as Wpf.Ui.Controls.MessageBox)?.Close();
+    }
+
+    private void CloseUpdateMessageBoxClick(object sender, RoutedEventArgs e)
+    {
+        (sender as Wpf.Ui.Controls.MessageBox)?.Close();
     }
 
     private void ClearSelected_Click(object sender, RoutedEventArgs e)
@@ -300,14 +336,13 @@ public partial class MainWindow : UiWindow
         FilesToConvert.Clear();
     }
 
-
     //var pathToThisEXE = Environment.ProcessPath;
     //RegistryKey _key = Registry.ClassesRoot.OpenSubKey($"*\\shell", true);
     //RegistryKey newkey = _key.CreateSubKey("Convert Images Sucka");
     //newkey.SetValue("AppliesTo", ".png OR .jpg OR .gif OR .tiff OR .webp OR .heic OR .jpeg OR .bmp");
-    //    RegistryKey subNewkey = newkey.CreateSubKey("Command");
+    //RegistryKey subNewkey = newkey.CreateSubKey("Command");
     //subNewkey.SetValue("", pathToThisEXE + " %1");
-    //    subNewkey.Close();
-    //    newkey.Close();
-    //    _key.Close();
+    //subNewkey.Close();
+    //newkey.Close();
+    //_key.Close();
 }
