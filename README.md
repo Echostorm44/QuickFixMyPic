@@ -9,6 +9,7 @@ You can right click on an image file or up to 16 in windows explorer to launch t
 ![image](https://user-images.githubusercontent.com/107306362/191943053-4c300155-4bef-4bff-805f-29b5d48c79c6.png)
 
 You can add more to the queue by clicking browse or by going to File > Browse For File(s) or Select Folder or simple the Browse button next to the Convert To dropdown list.
+
 ![image](https://user-images.githubusercontent.com/107306362/191943268-a8cb6116-cd07-4885-97b7-e8b115bf24f5.png)
 
 When you are satified with your choices simple click Engage and your new files will appear in the same folder as the source files they are reading.
