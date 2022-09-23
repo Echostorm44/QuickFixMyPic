@@ -27,7 +27,7 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <ui:TitleBar Title="Quick! Fix My Pics!" FontSize="16" Grid.Row="0" Icon="pack://application:,,,/appIcon.png"></ui:TitleBar>
+        <ui:TitleBar Title="Quick! Fix My Pic!" FontSize="16" Grid.Row="0" Icon="pack://application:,,,/appIcon.png"></ui:TitleBar>
         <Menu Grid.Row="1" Margin="0,0,0,10">
             <ui:MenuItem Header="File" >
                 <MenuItem Header="Browse For File(s)" IsCheckable="False" Click="btnBrowseFiles_Click"/>
