@@ -1,4 +1,6 @@
 # QuickFixMyPic
+[<img src="https://img.shields.io/badge/release-1.0.0-blue">](https://github.com/Echostorm44/QuickFixMyPic/releases)
+
  A simple utility for converting and resizing your pics
  
  ![image](https://user-images.githubusercontent.com/107306362/191941304-6a9259a0-3384-4bba-b0ea-29f04e4b707e.png)
@@ -14,3 +16,22 @@ You can add more to the queue by clicking browse or by going to File > Browse Fo
 
 When you are satified with your choices simple click Engage and your new files will appear in the same folder as the source files they are reading.
 
+# Installing
+
+You can install by simply [downloading the msi](https://github.com/Echostorm44/QuickFixMyPic/releases/download/1.0.0/SetupQuickFixMyPic.msi) from the release page
+
+You can download and unzip [this pack](https://github.com/Echostorm44/QuickFixMyPic/releases/download/1.0.0/QuickFixMyPic.zip) and use is as portable but you won't have the shell right click integration the installer adds
+
+You could be all fancy and use a cli packager like the baller you are.
+
+Via [WinGet](https://github.com/microsoft/winget-cli):
+
+```powershell
+winget install FleetingClarityStudios.QuickFixMyPic
+```
+
+Via [Chocolatey](https://chocolatey.org/):
+
+```powershell
+choco install quickfixmypic
+```
