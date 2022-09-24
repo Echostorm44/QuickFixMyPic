@@ -36,7 +36,6 @@ public partial class MainWindow : UiWindow
     public List<string> ConvertToTypesAvailable { get; set; }
     public string SelectedConvertToType { get; set; }
 
-    // TODO Icon attribution <a href="https://www.flaticon.com/free-icons/image" title="image icons">Image icons created by rsetiawan - Flaticon</a>
     NamedPipeManager PipeManager;
 
     public MainWindow()
@@ -45,7 +44,7 @@ public partial class MainWindow : UiWindow
         PipeManager = new NamedPipeManager("ImageConverter");
         PipeManager.StartServer();
         PipeManager.ReceiveString += HandleNamedPipe_OpenRequest;
-        ConvertToTypesAvailable = new List<string>() { "JPG", "PNG", "GIF", "WEBP", "HEIC", "BMP", "TIFF", "ICO" };
+        ConvertToTypesAvailable = new List<string>() { "No Conversion", "JPG", "PNG", "GIF", "WEBP", "HEIC", "BMP", "TIFF", "ICO" };
         this.DataContext = this;
         InitializeComponent();
 
@@ -90,26 +89,25 @@ public partial class MainWindow : UiWindow
     private void EngageClicked(object sender, RoutedEventArgs e)
     {
         var finalType = SelectedConvertToType;
-        if(string.IsNullOrEmpty(finalType) || FilesToConvert.Count == 0)
+        if(FilesToConvert.Count == 0)
         {
+            RootSnackbar.Show("Whoops", "No files selected", Wpf.Ui.Common.SymbolRegular.Warning16);
             return;
         }
         var deleteOriginals = chkDeleteOrig.IsChecked;
         var targetFiles = FilesToConvert.ToList();
         var fixWidth = 0;
         var fixHeight = 0;
+        var doConvert = true;
         var doResize = chkResize.IsChecked ?? false;
         int.TryParse(txtWidth.Text, out fixWidth);
         int.TryParse(txtHeight.Text, out fixHeight);
-
+        if(fixWidth == 0 || fixHeight == 0)
+        {
+            doResize = false;
+        }
         pbMainProgress.Value = 0;
         MagickFormat targetFormat = MagickFormat.Jpg;
-        chkDeleteOrig.IsEnabled = false;
-        btnEngage.IsEnabled = false;
-        lbTargetFiles.IsEnabled = false;
-        txtHeight.IsEnabled = false;
-        txtWidth.IsEnabled = false;
-        chkResize.IsEnabled = false;
         switch(finalType)
         {
             case "JPG":
@@ -147,7 +145,24 @@ public partial class MainWindow : UiWindow
                 targetFormat = MagickFormat.Ico;
             }
                 break;
+            default:
+            {
+                doConvert = false;
+            }
+                break;
         }
+
+        if(doConvert == false && doResize == false)
+        {
+            RootSnackbar.Show("Whoops", "No operations selected", Wpf.Ui.Common.SymbolRegular.Warning16);
+            return;
+        }
+        chkDeleteOrig.IsEnabled = false;
+        btnEngage.IsEnabled = false;
+        lbTargetFiles.IsEnabled = false;
+        txtHeight.IsEnabled = false;
+        txtWidth.IsEnabled = false;
+        chkResize.IsEnabled = false;
 
         Progress<double> prog = new Progress<double>();
         prog.ProgressChanged += (a, b) =>
@@ -165,11 +180,15 @@ public partial class MainWindow : UiWindow
                 {
                     using(var image = new MagickImage(item))
                     {
-                        image.Format = targetFormat;
                         var fileName = System.IO.Path.GetFileName(item);
                         var extension = System.IO.Path.GetExtension(item);//includes the .
                         var rootPath = item.Replace(fileName, "");
-                        var fullWriteFilePath = System.IO.Path.Combine(rootPath, fileName.Replace(extension, "." + finalType.ToLower()));
+                        string fullWriteFilePath = item;
+                        if(doConvert)
+                        {
+                            image.Format = targetFormat;
+                            fullWriteFilePath = System.IO.Path.Combine(rootPath, fileName.Replace(extension, "." + finalType.ToLower()));
+                        }
                         fullWriteFilePath = GeneralHelpers.CheckPathForDupesAndIncIfNeeded(fullWriteFilePath);
                         if(doResize && fixHeight > 0 && fixWidth > 0)
                         {
@@ -195,6 +214,7 @@ public partial class MainWindow : UiWindow
             }
         }).ContinueWith(a =>
         {
+            RootSnackbar.Show("Victory!", "All Targets Down", Wpf.Ui.Common.SymbolRegular.EmojiSmileSlight20);
             txtHeight.IsEnabled = true;
             txtWidth.IsEnabled = true;
             chkResize.IsEnabled = true;

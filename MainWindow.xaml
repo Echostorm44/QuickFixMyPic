@@ -81,5 +81,8 @@
         <Border Grid.Row="6" Padding="10">
             <ListBox ItemsSource="{Binding FilesToConvert}" AllowDrop="True" Drop="ListBox_Drop" Name="lbTargetFiles"></ListBox>
         </Border>
+         <ui:Snackbar x:Name="RootSnackbar" Title="Hello World!" Grid.Row="7" Appearance="Secondary" CloseButtonEnabled="False" Icon="Warning12"
+                        Message="Remember that the Heat Death of Universe is coming someday, no time to explain - let's go!"
+                        Timeout="3000" FontSize="16" />
     </Grid>
 </ui:UiWindow>
