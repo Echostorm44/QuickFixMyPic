@@ -184,6 +184,10 @@ public partial class MainWindow : UiWindow
                         var extension = System.IO.Path.GetExtension(item);//includes the .
                         var rootPath = item.Replace(fileName, "");
                         string fullWriteFilePath = item;
+                        if(deleteOriginals == true)// delete early so we can use the same filename 
+                        {
+                            File.Delete(item);
+                        }
                         if(doConvert)
                         {
                             image.Format = targetFormat;
@@ -195,10 +199,6 @@ public partial class MainWindow : UiWindow
                             image.Resize(fixWidth, fixHeight);
                         }
                         image.Write(fullWriteFilePath);
-                        if(deleteOriginals == true)
-                        {
-                            File.Delete(item);
-                        }
                         lbTargetFiles.Dispatcher.Invoke(() =>
                         {
                             FilesToConvert.Remove(item);
