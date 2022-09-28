@@ -1,5 +1,5 @@
 # QuickFixMyPic
-[<img src="https://img.shields.io/badge/release-1.0.0-blue">](https://github.com/Echostorm44/QuickFixMyPic/releases)
+[<img src="https://img.shields.io/badge/release-1.0.1-blue">](https://github.com/Echostorm44/QuickFixMyPic/releases)
 
  A simple utility for converting and resizing your pics
  
