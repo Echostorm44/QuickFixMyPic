@@ -1,10 +1,12 @@
 ﻿using ImageMagick;
 using Microsoft.Win32;
 using QuickFixMyPic.Helpers;
+using QuickFixMyPic.Properties;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.DirectoryServices.ActiveDirectory;
+using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
@@ -191,6 +193,10 @@ public partial class MainWindow : UiWindow
                         if(doConvert)
                         {
                             image.Format = targetFormat;
+                            if(targetFormat == MagickFormat.Ico)
+                            {
+                                image.Settings.SetDefine("icon:auto-resize", "256,128,96,64,48,32,16");
+                            }
                             fullWriteFilePath = System.IO.Path.Combine(rootPath, fileName.Replace(extension, "." + finalType.ToLower()));
                         }
                         fullWriteFilePath = GeneralHelpers.CheckPathForDupesAndIncIfNeeded(fullWriteFilePath);
