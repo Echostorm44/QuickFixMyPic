@@ -1,5 +1,5 @@
 # QuickFixMyPic
-[<img src="https://img.shields.io/badge/release-1.0.2-blue">](https://github.com/Echostorm44/QuickFixMyPic/releases)
+[<img src="https://img.shields.io/badge/release-1.0.3-blue">](https://github.com/Echostorm44/QuickFixMyPic/releases)
 
  A simple utility for converting and resizing your pics
  
@@ -18,9 +18,9 @@ When you are satified with your choices simple click Engage and your new files w
 
 # Installing
 
-You can install by simply [downloading the msi](https://github.com/Echostorm44/QuickFixMyPic/releases/download/1.0.2.0/SetupQuickFixMyPic.msi) from the release page
+You can install by simply [downloading the msi](https://github.com/Echostorm44/QuickFixMyPic/releases/download/1.0.3.0/SetupQuickFixMyPic.msi) from the release page
 
-You can download and unzip [this pack](https://github.com/Echostorm44/QuickFixMyPic/releases/download/1.0.2.0/QuckFixMyPic.zip) and use is as portable but you won't have the shell right click integration the installer adds
+You can download and unzip [this pack](https://github.com/Echostorm44/QuickFixMyPic/releases/download/1.0.3.0/QuckFixMyPic.zip) and use is as portable but you won't have the shell right click integration the installer adds
 
 You could be all fancy and use a cli packager like the baller you are.
 
@@ -28,10 +28,4 @@ Via [WinGet](https://github.com/microsoft/winget-cli):
 
 ```powershell
 winget install FleetingClarityStudios.QuickFixMyPic
-```
-
-Via [Chocolatey](https://chocolatey.org/):
-
-```powershell
-choco install quickfixmypic
 ```
