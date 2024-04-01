@@ -22,7 +22,7 @@ You can install by simply [downloading the msi](https://github.com/Echostorm44/Q
 
 You can download and unzip [this pack](https://github.com/Echostorm44/QuickFixMyPic/releases/download/1.0.3.0/QuckFixMyPic.zip) and use is as portable but you won't have the shell right click integration the installer adds
 
-You could be all fancy and use a cli packager like the baller you are.
+You could be all fancy and use a cli packager like the l33t haxx0r you are...
 
 Via [WinGet](https://github.com/microsoft/winget-cli):
 
